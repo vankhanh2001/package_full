@@ -52,7 +52,7 @@ x86_64
       # option check_signature
       ```
 
-  3. Trong phần nguồn cấp dữ liệu tùy chỉnh, hãy thêm danh sách bên dưới
+  3. Trong phần nguồn cấp dữ liệu tùy chỉnh (/etc/opkg/customfeeds.conf), hãy thêm danh sách bên dưới
       ```
       src/gz custom_generic https://github.com/vankhanh2001/package_full/tree/main/generic
       src/gz custom_arch https://github.com/vankhanh2001/package_full/tree/main/x86_64
