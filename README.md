@@ -1,20 +1,20 @@
-# Personal OpenWrt OPKG Server
-Install dan upgrade paket aplikasi komunitas modifikasi OpenWrt (seperti: OpenClash, Passwall, ShadowSocksR+ Plus, Wegare STL, Tiny File Manager, Xderm Mini, v2rayA, Modeminfo, dll) dengan mudah.
+# Máy chủ OpenWrt OPKG cá nhân
+Cài đặt gói nâng cấp và ứng dụng sửa đổi OpenWrt (có thể là: OpenClash, Passwall, ShadowSocksR+ Plus, Wegare STL, Tiny File Manager, Xderm Mini, v2rayA, Modeminfo, dll) sau đó.
 
-Kelebihan instalasi dan update menggunakan server kustom seperti ini adalah:
-1. Tidak perlu repot menggunakan wget dan curl yang sangat panjang dan rumit.
-2. Instalasi paket ipk bisa menggunakan `opkg install nama-paket`.
-3. Instalasi paket ipk juga bisa menggunakan fitur **System - Software** pada LuCI OpenWrt.
+Ưu điểm của việc cài đặt và cập nhật bằng máy chủ tùy chỉnh như thế này là:
+1. Không cần bận tâm đến việc sử dụng wget và curl rất dài và phức tạp.
+2. Cài đặt gói Ipk có thể sử dụng `opkg install package-name`.
+3. Cài đặt gói IPK cũng có thể sử dụng tính năng **System - Software** trên LuCI OpenWrt.
 
-Daftar Isi:
-- [Daftar Arsitektur](#daftar-arsitektur)
-- [Cara Menambah Repository ke Software Update OpenWrt](#cara-menambah-repository-ke-software-update-openwrt)
-- [Cara Install dan Update Paket](#cara-install-dan-update-paket)
-- [Cara Memeriksa Paket Sudah Terinstal Atau Belum](#cara-memeriksa-paket-sudah-terinstal-atau-belum)
-- [Kredit](#kredit)
+Danh sách các nội dung:
+- [danh sách kiến ​​trúc](#kiến trúc danh sách)
+- [Cách thêm kho lưu trữ vào bản cập nhật phần mềm OpenWrt](#cách thêm kho lưu trữ vào phần mềm cập nhật openwrt)
+- [Cách cài đặt và cập nhật gói](#cách cài đặt và cập nhật gói)
+- [Cách kiểm tra gói đã được cài đặt hay chưa](#cách kiểm tra gói đã cài đặt hay chưa)
+- [Tín dụng](#Tín dụng)
 
-## Daftar Arsitektur
-Repository ini mendukung arsitektur dibawah ini:
+## danh sách kiến ​​trúc
+Kho lưu trữ này hỗ trợ các kiến ​​trúc sau:
 
 ```
 aarch64_cortex-a53
@@ -28,115 +28,107 @@ mipsel_24kc
 x86_64
 ```
 
-## Cara Menambah Repository ke Software Update OpenWrt
-Cara menambahkan repository ini ke firmware, dapat menggunakan 2 cara yaitu:
-- [Menggunakan LuCI](#menggunakan-luci)
-- [Menggunakan Terminal](#menggunakan-terminal) seperti JuiceSSH/Termius/Termux
+## Cách thêm kho lưu trữ vào bản cập nhật phần mềm OpenWrt
+Để thêm kho lưu trữ này vào phần sụn, bạn có thể sử dụng 2 cách, cụ thể là:
+- [Sử dụng LuCI](#sử dụng-luci)
+- [Sử dụng thiết bị đầu cuối](#thiết bị đầu cuối sử dụng) hoặc JuiceSSH/Termius/Termux
 
 
-### Menggunakan LuCI
+### Sử dụng LuCI
 
-  1. Masuk IP LuCI (contoh: 192.168.1.1), Login, Buka **System -> Software -> Configuration**
+  1. Nhập LuCI IP (ví dụ: 192.168.1.1), Đăng nhập, Mở **System -> Software -> Configuration**
   
-  2. Tambahkan tanda # (pagar) di depan baris ```option check_signature```, contoh dibawah ini
+  2. Thêm dấu # (hedge) trước dòng ```option check_signature```, ví dụ bên dưới
   
-      ubah tulisan dibawah ini
+      thay đổi văn bản dưới đây
       
       ```
-      option check_signature
+      tùy chọn check_signature
       ```
       
-      menjadi seperti ini
+      được như thế này
       
       ```
-      # option check_signature
+      # tùy chọn check_signature
       ```
 
-  3. Pada bagian custom feeds tambahkan list dibawah ini
-
+  3. Trong phần nguồn cấp dữ liệu tùy chỉnh, hãy thêm danh sách bên dưới
       ```
-      src/gz custom_generic https://raw.githubusercontent.com/lrdrdn/my-opkg-repo/main/generic
-      src/gz custom_arch https://raw.githubusercontent.com/lrdrdn/my-opkg-repo/main/arm_cortex-a7_neon-vfpv4
+      src/gz custom_generic https://github.com/vankhanh2001/package_full/tree/main/generic
+      src/gz custom_arch https://github.com/vankhanh2001/package_full/tree/main/x86_64
       ```
 
-      ubah **arm_cortex-a7_neon-vfpv4** dan sesuaikan arsitektur CPU router OpenWrt kalian
+     thay đổi **X86** và điều chỉnh kiến ​​trúc CPU bộ định tuyến OpenWrt của bạn
 
-      ![](https://raw.githubusercontent.com/lrdrdn/my-opkg-repo/main/preview/preview1.gif)
  
-### Menggunakan Terminal
-  1. Gunakan salah satu rekomendasi aplikasi Terminal dibawah ini
+### Sử dụng thiết bị đầu cuối
+  1. Sử dụng một trong các đề xuất ứng dụng Terminal bên dưới
       - Terminal TTYD (Paket OpenWrt)
       - JuiceSSH
       - Termius
       - Termux
       
-      > Catatan: Pengguna dapat menggunakan aplikasi terminal selain yang disebutkan diatas
+      > Lưu ý: Người dùng có thể sử dụng các ứng dụng đầu cuối khác ngoài những ứng dụng được đề cập ở trên
   
-  2. Copy paste dibawah di terminal, otomatis akan menyesuaikan tipe arsitektur cpu router
+  2. Sao chép dán bên dưới vào thiết bị đầu cuối, nó sẽ tự động điều chỉnh theo loại kiến ​​​​trúc cpu của bộ định tuyến
       
       ```
       sed -i 's/option check_signature/# option check_signature/g' /etc/opkg.conf
-      echo "src/gz custom_generic https://raw.githubusercontent.com/lrdrdn/my-opkg-repo/main/generic" >> /etc/opkg/customfeeds.conf
-      echo "src/gz custom_arch https://raw.githubusercontent.com/lrdrdn/my-opkg-repo/main/$(grep "OPENWRT_ARCH" /etc/os-release | awk -F '"' '{print $2}')" >> /etc/opkg/customfeeds.conf
+      echo "src/gz custom_generic https://github.com/vankhanh2001/package_full/tree/main/generic" >> /etc/opkg/customfeeds.conf
+      echo "src/gz custom_arch https://github.com/vankhanh2001/package_full/tree/main/$(grep "OPENWRT_ARCH" /etc/os-release | awk -F '"' '{print $2}')" >> /etc/opkg/customfeeds.conf
       ```
 
-      > Catatan: untuk firmware OpenWrt 19.07 masih ada yg harus install manual seperti `kcptun-client`, `xray-core` dan `libcap-bin`.
+      > Lưu ý: đối với phần sụn OpenWrt 19.07, vẫn có những thứ cần được cài đặt thủ công, chẳng hạn như `kcptun-client`, `xray-core` và `libcap-bin`.
     
-      ![](https://raw.githubusercontent.com/lrdrdn/my-opkg-repo/main/preview/preview2.gif)
     
 
-## Cara Install dan Update Paket
-Cara instalasi repository ini, dapat menggunakan 2 cara yaitu
-- [Menggunakan LuCI](#install-dan-update-paket-menggunakan-luci)
-- [Menggunakan Terminal](#install-dan-update-paket-menggunakan-terminal) seperti JuiceSSH/Termius/Termux
-
-### Install dan Update Paket Menggunakan LuCI
-  1. Masuk IP LuCI (contoh: 192.168.1.1), Login, Buka **System -> Software -> Configuration**
-  2. Tekan tombol **Update Lists**.
-  3. Cari nama paket (seperti: `luci-app-passwall`) pada kolom **Filter**.
-  4. Tekan tombol **Find Package**.
-  5. Scroll sedikit, lihat dibawah ada tab **Installed packages** dan **Available packages** :
-      - Installed packages : paket pada daftar tersebut sudah terpasang.
-      - Available packages : paket pada dafter tersebut belum terpasang.
-  6. Klik **Available packages**, lalu cari nama paket yang di tulis di filter tadi.
-  7. Klik tulisan **Install** pada baris yang terdapat pada nama paket tersebut, lalu tunggu hingga instalasi paket selesai.
+## Cách cài đặt và cập nhật gói
+Cách cài đặt kho lưu trữ này, bạn có thể sử dụng 2 cách cụ thể là
+- [Sử dụng LuCI](#install-and-update-package-using-luci)
+- [Sử dụng Terminal](#install-and-update-packages-using-terminal) như JuiceSSH/Termius/Termux
+### Cài đặt và cập nhật các gói bằng LuCI
+  1. Nhập IP của LuCI (ví dụ: 192.168.1.1), Đăng nhập, Đi tới **System -> Software -> Configuration**
+  2. Nhấn nút **Update Lists**.
+  3. Tìm tên gói (chẳng hạn như: `luci-app-passwall`) trong trường **Filter**.
+  4. Nhấn nút **Tìm gói hàng**.
+  5. Cuộn một chút, xem bên dưới có các tab **Gói đã cài đặt** và **Gói có sẵn**:
+      - Các gói đã cài đặt: các gói trong danh sách đã được cài đặt.
+      - Các gói khả dụng: các gói trong danh sách chưa được cài đặt.
+  6. Nhấp vào **Các gói có sẵn**, sau đó tìm tên gói được ghi trong bộ lọc trước đó.
+  7. Nhấp vào **Cài đặt** trên dòng trong tên gói, sau đó đợi quá trình cài đặt gói kết thúc.
  
-### Install dan Update Paket Menggunakan Terminal
-  1. Buka aplikasi terminal yang disuka
-  2. Jalankan perintah dibawah ini untuk memperbarui daftar paket yang tersedia di server
+### Cài đặt và cập nhật các gói bằng Terminal
+  1. Mở ứng dụng đầu cuối ưa thích của bạn
+  2. Chạy lệnh bên dưới để cập nhật danh sách các gói có sẵn trên máy chủ
       ```
       opkg update
       ```
   
-  3. Jalankan perintah `opkg install nama-paket`, ganti `nama-paket` menjadi nama paket yang ada (contoh kali ini akan menggunakan paket `luci-app-passwall`).
+  3. Chạy lệnh `opkg install package-name`, thay thế `package-name` thành tên gói hiện có (ví dụ này sẽ sử dụng gói `luci-app-passwall`).
       
       ```
       opkg install luci-app-passwall
       ```
 
-## Cara Memeriksa Paket Sudah Terinstal Atau Belum
-Cara instalasi repository ini, dapat menggunakan 2 cara yaitu
-- [Menggunakan LuCI](#cara-memeriksa-status-paket-dengan-luci)
-- [Menggunakan Terminal](#cara-memeriksa-status-paket-dengan-terminal) seperti JuiceSSH/Termius/Termux
+## Cách kiểm tra gói đã được cài đặt hay chưa
+Cách cài đặt kho lưu trữ này, bạn có thể sử dụng 2 cách cụ thể là
+- [Sử dụng LuCI](#cách-kiểm-tra-trạng-thái-bưu-kiện-bằng-luci)
+- [Sử dụng thiết bị đầu cuối](#cách-kiểm-tra-trạng-thái-bưu-kiện-với-thiết-bị-thiết-bị) giống JuiceSSH/Termius/Termux
 
-### Cara Memeriksa Status Paket dengan LuCI
-  1. Masuk IP LuCI (contoh: 192.168.1.1), lalu Login.
-      - Jika memasang paket yang terdapat kata `luci-app`, biasanya akan muncul di LuCI System/Services/NAS/VPN/Modem/Network dan lain lain.
-      - Jika memasang paket yang terdapat kata `luci-proto`, biasanya akan muncul di **Network -> Pilih salah satu interface -> General Setup -> Protocol**.
-      - Jika memasang paket yang terdapat kata `luci-theme`, biasanya akan muncul di **System -> System Properties -> Language and Style -> Design**.
-      - Jika memasang paket yang di install tidak terdapat kata luci, maka paket tersebut tidak akan menampilkan apapun di LuCI.
+### Cách kiểm tra trạng thái gói hàng với LuCI
+  1. Nhập IP LuCI (ví dụ: 192.168.1.1), sau đó Đăng nhập.
+      - Nếu bạn cài đặt một gói có chứa từ `luci-app`, nó sẽ thường xuất hiện trong System/Services/NAS/VPN/Modem/Network của LuCI và những thứ khác.
+      - Nếu bạn cài đặt một gói chứa từ `luci-proto`, nó sẽ thường xuất hiện trong **Mạng -> Chọn giao diện -> Cài đặt chung -> Giao thức**.
+      - Nếu bạn cài đặt một gói có chứa từ `luci-theme`, nó sẽ thường xuất hiện trong **System -> System Properties -> Language and Style -> Design**.
+      - Nếu gói đã cài đặt không chứa từ luci, thì gói đó sẽ không hiển thị bất kỳ thứ gì trong LuCI.
 
-### Cara Memeriksa Status Paket dengan Terminal
-  1. Buka terminal
-  2. Jalankan perintah `opkg list-installed nama-paket`, ganti `nama-paket` menjadi nama paket yang ada (contoh kali ini akan menggunakan paket `luci-app-passwall`).
+### Cách kiểm tra trạng thái gói hàng bằng Terminal
+  1. Mở một thiết bị đầu cuối
+  2. Chạy lệnh `opkg list-install package-nama`, thay thế `package-name` thành tên gói hiện có (trong ví dụ này, chúng tôi sẽ sử dụng gói `luci-app-passwall`).
       
       ```
       opkg list-installed luci-app-passwall
       ```
       
-      Jika di terminal muncul `luci-app-passwall - 4.43-2` maka paket aplikasi sudah terpasang, jika tidak ada maka paket belum terpasang. Angka `4.43-2` pada terminal tadi adalan versi paket aplikasi yang terinstal.
+      Nếu trong thiết bị đầu cuối xuất hiện `luci-app-passwall - 4.43-2` thì gói ứng dụng đã được cài đặt, nếu không có thì gói chưa được cài đặt. Số `4.43-2` trong terminal là phiên bản của gói ứng dụng đã cài đặt.
       
-      
-### Kredit
-- [Nugroho](https://radenku.com) sebagai pemilik repo, builder dan yang buat video contoh.
-- [Helmi Amirudin](https://helmiau.com/about) sebagai tukang dokumentasi.
