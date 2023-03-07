@@ -43,13 +43,13 @@ x86_64
       thay đổi văn bản dưới đây
       
       ```
-      tùy chọn check_signature
+      option check_signature
       ```
       
       được như thế này
       
       ```
-      # tùy chọn check_signature
+      # option check_signature
       ```
 
   3. Trong phần nguồn cấp dữ liệu tùy chỉnh, hãy thêm danh sách bên dưới
