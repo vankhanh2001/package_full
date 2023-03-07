@@ -58,7 +58,7 @@ x86_64
       src/gz custom_arch https://github.com/vankhanh2001/package_full/tree/main/x86_64
       ```
 
-     thay đổi **X86** và điều chỉnh kiến ​​trúc CPU bộ định tuyến OpenWrt của bạn
+     thay đổi **X86_64** thành kiến ​​trúc CPU bộ định tuyến OpenWrt của bạn
 
  
 ### Sử dụng thiết bị đầu cuối
