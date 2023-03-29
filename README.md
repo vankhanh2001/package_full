@@ -54,8 +54,8 @@ x86_64
 
   3. Trong phần nguồn cấp dữ liệu tùy chỉnh (/etc/opkg/customfeeds.conf), hãy thêm danh sách bên dưới
       ```
-      src/gz custom_generic https://github.com/vankhanh2001/package_full/tree/main/generic
-      src/gz custom_arch https://github.com/vankhanh2001/package_full/tree/main/x86_64
+      src/gz custom_generic https://raw.githubusercontent.com/vankhanh2001/package_full/tree/main/generic
+      src/gz custom_arch https://raw.githubusercontent.com/vankhanh2001/package_full/tree/main/x86_64
       ```
 
      thay đổi **X86_64** thành kiến ​​trúc CPU bộ định tuyến OpenWrt của bạn
@@ -74,8 +74,8 @@ x86_64
       
       ```
       sed -i 's/option check_signature/# option check_signature/g' /etc/opkg.conf
-      echo "src/gz custom_generic https://github.com/vankhanh2001/package_full/tree/main/generic" >> /etc/opkg/customfeeds.conf
-      echo "src/gz custom_arch https://github.com/vankhanh2001/package_full/tree/main/$(grep "OPENWRT_ARCH" /etc/os-release | awk -F '"' '{print $2}')" >> /etc/opkg/customfeeds.conf
+      echo "src/gz custom_generic https://raw.githubusercontent.com/vankhanh2001/package_full/tree/main/generic" >> /etc/opkg/customfeeds.conf
+      echo "src/gz custom_arch https://raw.githubusercontent.com/vankhanh2001/package_full/tree/main/$(grep "OPENWRT_ARCH" /etc/os-release | awk -F '"' '{print $2}')" >> /etc/opkg/customfeeds.conf
       ```
 
       > Lưu ý: đối với phần sụn OpenWrt 19.07, vẫn có những thứ cần được cài đặt thủ công, chẳng hạn như `kcptun-client`, `xray-core` và `libcap-bin`.
